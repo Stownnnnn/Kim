@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KIM — Perdu</title>
+<meta name="theme-color" content="#030303">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Share+Tech+Mono&display=swap">
+<style>
+  :root { --lx: 50vw; --ly: 50vh; --rr: 200px; }
+  html, body { margin: 0; height: 100%; background: #030303; color: #d9d8d4; overflow: hidden; }
+  body { display: grid; place-items: center; text-align: center; font-family: 'Instrument Serif', Georgia, serif; cursor: crosshair; }
+  h1 { margin: 0 0 .4em; font-weight: 400; font-style: italic; font-size: clamp(32px, 5vw, 64px); }
+  p { margin: 0 0 2em; font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: .25em; color: #4bf584; text-shadow: 0 0 6px rgba(75,245,132,.5); }
+  a { font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: .35em; text-transform: uppercase; color: #a19f9b; border: 1px solid #3a3937; padding: .8em 1.6em; text-decoration: none; }
+  a:hover, a:focus-visible { color: #d9d8d4; border-color: #a19f9b; }
+  .dark { position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(circle var(--rr) at var(--lx) var(--ly), rgba(3,3,3,0) 0%, rgba(3,3,3,.55) 60%, rgba(3,3,3,.985) 100%); }
+  @media (prefers-reduced-motion: reduce), (hover: none) { .dark { display: none; } }
+</style>
+</head>
+<body>
+  <main>
+    <h1>Tu t'es perdu.</h1>
+    <p>[SYSTÈME] Salle introuvable.</p>
+    <a id="back" href="./">Revenir au seuil</a>
+  </main>
+  <div class="dark" aria-hidden="true"></div>
+<script>
+  /* GitHub Pages : retrouve la racine du site, qu'il soit sur user.github.io/ ou user.github.io/depot/ */
+  (function () {
+    var a = document.getElementById('back');
+    var seg = location.pathname.split('/').filter(Boolean);
+    var root = (/github\.io$/.test(location.hostname) && seg.length) ? '/' + seg[0] + '/' : '/';
+    a.href = root + '#seuil';
+    addEventListener('pointermove', function (e) {
+      document.documentElement.style.setProperty('--lx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--ly', e.clientY + 'px');
+    });
+  })();
+</script>
+</body>
+</html>

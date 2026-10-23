@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KIM — Le Dédale</title>
+<meta name="description" content="Kim. Excavateur du Dédale. Il fait noir.">
+<meta name="theme-color" content="#030303">
+<meta property="og:title" content="KIM">
+<meta property="og:description" content="Il fait noir.">
+<meta property="og:image" content="img/fragment-01.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23030303'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23d9d8d4' stroke-width='1.5'/%3E%3Cpath d='M7 16h18' stroke='%23d9d8d4' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=Instrument+Serif:ital@0;1&family=Share+Tech+Mono&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<noscript>
+  <style>
+    html, body { overflow: auto; }
+    #world { position: static; transform: none; }
+    .room { position: relative; left: auto; top: auto; height: auto; min-height: 100vh; }
+    .room .inner { position: relative; }
+    .dark, #hud, #intro, .grain { display: none !important; }
+  </style>
+</noscript>
+<script defer src="js/data.js"></script>
+<script defer src="js/audio.js"></script>
+<script defer src="js/main.js"></script>
+</head>
+<body>
+
+<!-- ======================================================================
+     INTRO
+     ====================================================================== -->
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-1">
+  <div class="intro-text">
+    <p class="intro-line" id="intro-1">Il fait noir.</p>
+    <p class="intro-line">Tu ne vois presque rien.</p>
+    <p class="intro-line intro-last">Lui non plus.</p>
+  </div>
+  <div class="intro-actions">
+    <button type="button" class="btn-enter" id="btn-enter">Entrer</button>
+    <div class="intro-opts">
+      <button type="button" id="intro-sound" aria-pressed="false">Son : non</button>
+      <span aria-hidden="true">·</span>
+      <button type="button" id="intro-light">Entrer avec la lumière allumée</button>
+    </div>
+    <p class="intro-help">Bouge la souris (ou le doigt) pour éclairer.<br>Les passages sont au bord des murs.</p>
+  </div>
+</div>
+
+<noscript>
+  <p class="noscript">Ce site est un labyrinthe qui a besoin de JavaScript. Sans lui, voici les salles, éclairées.</p>
+</noscript>
+
+<!-- ======================================================================
+     LE LABYRINTHE — une <section> par salle.
+     Les positions et les passages sont dans js/data.js (DEDALE_MAP).
+     ====================================================================== -->
+<main id="world">
+
+  <!-- ===== [2·1] LE SEUIL (départ) ===== -->
+  <section class="room" id="seuil" data-name="Le seuil" aria-label="Le seuil" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[2·1]</p>
+      <p class="whisper reveal">Avance.</p>
+      <h1 class="kim-title" aria-label="Kim"><span>K</span><span>I</span><span>M</span></h1>
+      <p class="kim-sub">Nom : <span class="unknown" data-glitch="???">???</span></p>
+      <p class="hint">
+        Les passages sont au bord des murs.<br>
+        <span class="hint-keys">Flèches · ZQSD · clic</span> &nbsp;—&nbsp; <span class="hint-keys"><kbd>/</kbd> pour s'adresser au Système</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== [2·0] (vide) ===== -->
+  <section class="room room-empty" id="rien" data-name="—" aria-label="Une salle vide" tabindex="-1">
+    <div class="inner"><p class="lone">Rien.</p></div>
+  </section>
+
+  <!-- ===== [3·1] (vide) ===== -->
+  <section class="room room-empty" id="couloir" data-name="—" aria-label="Une salle vide" tabindex="-1">
+    <div class="inner"><p class="lone lone-tiny" aria-hidden="true">…</p></div>
+  </section>
+
+  <!-- ===== [0·1] (vide) ===== -->
+  <section class="room room-empty" id="vide" data-name="—" aria-label="Une salle vide" tabindex="-1">
+    <div class="inner"><p class="lone">Ici non plus.</p></div>
+  </section>
+
+  <!-- ===== [1·2] (vide) ===== -->
+  <section class="room room-empty" id="creux" data-name="—" aria-label="Une salle vide" tabindex="-1">
+    <div class="inner"><p class="lone">Continue.</p></div>
+  </section>
+
+  <!-- ===== [2·2] IDENTITÉ ===== -->
+  <section class="room" id="identite" data-name="Identité" aria-label="Identité" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[2·2] — Identité</p>
+      <div class="file" data-render="identite"></div>
+    </div>
+  </section>
+
+  <!-- ===== [1·0] LE CORPS — description physique ===== -->
+  <section class="room" id="corps" data-name="Le corps" aria-label="Le corps — description physique" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[1·0] — Description physique</p>
+      <div class="prose">
+        <p>Il peut faire des mouvements que les plus grands gymnastes ne seraient pas capable de faire et a la fâcheuse tendance de mêler ça à ses talents d'archer.</p>
+        <p class="big">Il est <span class="contort">hyperlaxe</span>.</p>
+        <p>Enfin, il est aveugle d'un œil et cache l'autre « fonctionnel » par un cache-œil.</p>
+        <p class="cut">Il ne ressent<span class="caret" aria-hidden="true"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== [0·2] L'ESPRIT — description mentale ===== -->
+  <section class="room" id="esprit" data-name="L'esprit" aria-label="L'esprit — description mentale" tabindex="-1">
+    <div class="inner inner-wide">
+      <p class="tag">[0·2] — Description mentale</p>
+      <div class="esprit-grid">
+        <div class="prose">
+          <p class="big big-serif">Il est vide</p>
+          <p>Il est vide et a été bâtit toute son enfance pour l'être.</p>
+          <p>L'Entraînement l'a totalement détaché de ses émotions et il se force à donner un semblant de réaction à ce qui peut lui arriver, néanmoins
+            <span class="redact" aria-hidden="true">les choses qu'il a subi semblent ne pas avoir touché l'enfant qui est en lui. Cependant sa vision de « l'enfant » est erronée</span>
+            <span class="moved">[ passage déplacé — plus profond ]</span>
+          </p>
+          <p class="note"><span class="note-k">À noter</span> — lorsqu'il est envoyé en mission il tuera rarement ceux qui se mettent à travers de son objectif et se contentera de les assommer, il y voit une perte de temps.</p>
+        </div>
+        <div class="sys sys-window emitter monitor" role="img" aria-label="Fenêtre Système : état émotionnel. Une ligne plate.">
+          <div class="sys-head"><span>ÉTAT ÉMOTIONNEL</span><span>KIM</span></div>
+          <div class="sys-body">
+            <canvas class="mon-canvas" aria-hidden="true"></canvas>
+            <p class="mon-label" aria-hidden="true">&gt; SIMULATION : RÉACTION</p>
+            <p class="mon-read" aria-hidden="true">SIGNAL ······· <b>0.00</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== [3·0] STATISTIQUES (fenêtre Système) ===== -->
+  <section class="room" id="stats" data-name="Statistiques" aria-label="Statistiques" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[3·0]</p>
+      <div class="sys sys-window emitter" data-render="stats" role="region" aria-label="Fenêtre Système : statistiques"></div>
+    </div>
+  </section>
+
+  <!-- ===== [4·1] COMPÉTENCES (fenêtre Système) ===== -->
+  <section class="room" id="competences" data-name="Compétences" aria-label="Compétences" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[4·1]</p>
+      <div class="sys sys-window emitter" data-render="competences" role="region" aria-label="Fenêtre Système : compétences"></div>
+    </div>
+  </section>
+
+  <!-- ===== [4·2] TITRES (fenêtre Système) ===== -->
+  <section class="room" id="titres" data-name="Titres" aria-label="Titres" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[4·2]</p>
+      <div class="sys sys-window emitter" data-render="titres" role="region" aria-label="Fenêtre Système : titres"></div>
+    </div>
+  </section>
+
+  <!-- ===== [0·3] ??? — la salle cachée ===== -->
+  <section class="room" id="enfant" data-name="???" aria-label="Une salle qui n'est pas sur la carte" data-light="0.55" tabindex="-1">
+    <div class="inner">
+      <p class="tag tag-ghost">[?·?]</p>
+      <div class="prose prose-child">
+        <p class="late" data-delay="900">… les choses qu'il a subi semblent ne pas avoir touché l'enfant qui est en lui.</p>
+        <p class="late" data-delay="4200">Cependant sa vision de « l'enfant » est erronée puisqu'il croit que ce statut excuse tout même les pires horreurs.</p>
+        <p class="late child-age" data-delay="8000">11 ans.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== [3·3] ARCHIVES ===== -->
+  <section class="room" id="archives" data-name="Archives" aria-label="Archives" tabindex="-1">
+    <div class="inner">
+      <p class="tag">[3·3] — Archives</p>
+      <div class="prose prose-small">
+        <p>Kim — Excavateur du <a href="https://sites.google.com/view/dedale/home" target="_blank" rel="noopener">Dédale</a>.</p>
+        <p>Illustration couleur : <span class="mono">@M7MD_ODA</span>.<br>Autres images : planches de manga. Droits à leurs auteurs respectifs.</p>
+        <p class="mono explored" data-render="explored">—</p>
+        <p><button type="button" class="btn-plain" data-action="forget">Oublier le chemin</button></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FRAGMENTS — les images, dispersées ===== -->
+  <section class="room room-frag" id="f1" data-name="Fragment 01" aria-label="Fragment 01" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="1" style="--fx:-4vw;--fy:1vh;--fr:-1.2deg">
+        <img src="img/fragment-01.jpg" alt="Kim sourit, les yeux fermés, un cache-œil noir sur le visage." loading="lazy" decoding="async" width="736" height="952">
+        <figcaption>FRAGMENT 01/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f2" data-name="Fragment 02" aria-label="Fragment 02" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="2" style="--fx:6vw;--fy:-3vh;--fr:1.6deg">
+        <img src="img/fragment-02.jpg" alt="Kim, le visage marqué de coups, porte la main à sa bouche, le regard fixe." loading="lazy" decoding="async" width="736" height="736">
+        <figcaption>FRAGMENT 02/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f3" data-name="Fragment 03" aria-label="Fragment 03" tabindex="-1">
+    <div class="inner">
+      <figure class="frag has-color" data-frag="3" style="--fx:-2vw;--fy:0vh;--fr:0deg">
+        <img src="img/fragment-03.jpg" alt="Illustration en couleur : Kim, torse nu, une bande sur l'œil, bande son arc." loading="lazy" decoding="async" width="735" height="1156">
+        <img class="color" src="img/fragment-03.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="735" height="1156">
+        <figcaption>FRAGMENT 03/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f4" data-name="Fragment 04" aria-label="Fragment 04" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="4" style="--fx:3vw;--fy:4vh;--fr:-.8deg">
+        <img src="img/fragment-06.jpg" alt="Kim, de dos, bande son arc au milieu d'une rue." loading="lazy" decoding="async" width="736" height="736">
+        <figcaption>FRAGMENT 04/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f5" data-name="Fragment 05" aria-label="Fragment 05" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="5" style="--fx:-7vw;--fy:-2vh;--fr:2deg">
+        <img src="img/fragment-04.jpg" alt="Kim, sourire figé et regard vide, l'arc contre l'épaule." loading="lazy" decoding="async" width="735" height="675">
+        <figcaption>FRAGMENT 05/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f6" data-name="Fragment 06" aria-label="Fragment 06" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="6" style="--fx:5vw;--fy:2vh;--fr:-2deg">
+        <img src="img/fragment-07.jpg" alt="Kim, tête baissée, cache-œil, l'arc dans le dos." loading="lazy" decoding="async" width="736" height="837">
+        <figcaption>FRAGMENT 06/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="room room-frag" id="f7" data-name="Fragment 07" aria-label="Fragment 07" tabindex="-1">
+    <div class="inner">
+      <figure class="frag" data-frag="7" style="--fx:-3vw;--fy:-4vh;--fr:1deg">
+        <img src="img/fragment-05.jpg" alt="Kim, de dos, esquive un coup." loading="lazy" decoding="async" width="736" height="691">
+        <figcaption>FRAGMENT 07/07</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================================================================
+     INTERFACE
+     ====================================================================== -->
+<nav id="hud" aria-label="Commandes">
+  <button type="button" id="btn-sys"><span aria-hidden="true">◇</span> Système<kbd>/</kbd></button>
+  <button type="button" id="btn-map">Carte<kbd>M</kbd></button>
+  <button type="button" id="btn-light" aria-pressed="false">Lumière<kbd>L</kbd></button>
+  <button type="button" id="btn-sound" aria-pressed="false">Son</button>
+</nav>
+
+<dialog id="console" class="sys" aria-labelledby="console-title">
+  <div class="sys-head">
+    <span id="console-title">SYSTÈME</span>
+    <span class="sys-head-r"><span class="blink" aria-hidden="true">■</span> EN LIGNE
+      <button type="button" class="sys-close" aria-label="Fermer la fenêtre Système">×</button>
+    </span>
+  </div>
+  <div class="sys-body">
+    <div id="console-log" class="console-log" aria-live="polite"></div>
+    <form id="console-form" class="console-line" autocomplete="off">
+      <label for="console-input">&gt;</label>
+      <input id="console-input" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="send" placeholder="requête…">
+    </form>
+    <div class="chips" aria-label="Requêtes rapides">
+      <button type="button" data-cmd="carte">carte</button>
+      <button type="button" data-cmd="statistiques">statistiques</button>
+      <button type="button" data-cmd="compétences">compétences</button>
+      <button type="button" data-cmd="titres">titres</button>
+      <button type="button" data-cmd="fragments">fragments</button>
+      <button type="button" data-cmd="position">position</button>
+      <button type="button" data-cmd="aide">aide</button>
+    </div>
+  </div>
+</dialog>
+
+<div id="toasts" aria-live="polite"></div>
+<p id="sr-live" class="sr-only" aria-live="polite"></p>
+<div class="grain" aria-hidden="true"></div>
+
+</body>
+</html>
